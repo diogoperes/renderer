@@ -42,6 +42,16 @@ export interface PlatformSettings {
    * Optional provided canvas element to use for rendering. If not provided, the platform will create its own canvas element.
    */
   canvas?: HTMLCanvasElement | null;
+
+  /**
+   * Request Animation Frame Error Callback
+   *
+   * @remarks
+   * If the requestAnimationFrame throws an error, this callback will be called.
+   *
+   * @param error The error that was thrown
+   */
+  rafErrorCb?: ((error: Error) => void) | null;
 }
 
 export abstract class Platform {
@@ -56,6 +66,7 @@ export abstract class Platform {
       numImageWorkers: settings.numImageWorkers ?? 2,
       forceWebGL2: settings.forceWebGL2 ?? false,
       canvas: settings.canvas ?? null,
+      rafErrorCb: settings.rafErrorCb || null,
     };
 
     // If a canvas was provided in the settings, use it. Otherwise, create a new one.
